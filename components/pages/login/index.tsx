@@ -1,17 +1,14 @@
 import React, { useState } from 'react'
-import { InferGetServerSidePropsType } from 'next'
+
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import TextfieldPrefixIcon from '../../forms/textfield/with-icon/prefix'
 import MyButtonLoading from '../../forms/button/with-loading'
 import MyAlert, { AlertTypes } from '../../modal/alert'
 import axios, { AxiosError } from 'axios'
-import { ironSessionOptions } from '../../../lib/session'
-import { withIronSessionSsr } from 'iron-session/next'
 
-export default function Index({ token }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    console.log(token);
-    
+
+export default function Index() {
     const router = useRouter()
     const [username, setUsername] = useState<string | undefined>('')
     const [password, setPassword] = useState<string | undefined>('')
@@ -82,14 +79,3 @@ export default function Index({ token }: InferGetServerSidePropsType<typeof getS
 }
 
 
-export const getServerSideProps = withIronSessionSsr(async function ({
-    req,
-    res,
-  }) {
-    const token = req.session.token
-    console.log(token);
-    return {
-      props: { token },
-    }
-  },
-  ironSessionOptions)
