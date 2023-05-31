@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-function Index() {
+function Index({ token}: { token: unknown}) {
   return (
     <div>Index</div>
   )
