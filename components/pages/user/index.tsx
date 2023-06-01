@@ -78,8 +78,6 @@ function Index({ token }: { token: unknown }) {
 
 
     useEffect(() => {
-        console.log('effects');
-
         dispatch(getData({ token: token, limit: 5, offset: 0 }))
     }, [])
 
