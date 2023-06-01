@@ -10,8 +10,8 @@ import axios, { AxiosError } from 'axios'
 
 export default function Index() {
     const router = useRouter()
-    const [username, setUsername] = useState<string | undefined>('')
-    const [password, setPassword] = useState<string | undefined>('')
+    const [username, setUsername] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [modalShow, setModalShow] = useState<boolean>(false)
     const [alertMessage, setAlertMessage] = useState<string>('')

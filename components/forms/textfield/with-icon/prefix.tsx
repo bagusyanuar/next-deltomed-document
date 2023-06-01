@@ -14,9 +14,9 @@ function Prefix({
     icon?: string,
     name: string,
     type: string,
-    value?: string,
+    value: string,
     placeholder: string,
-    onChange: (e?: React.ChangeEvent<HTMLInputElement>, value?: string) => void,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>, v: string) => void,
     className?: string,
 }) {
     const onHandleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {

@@ -7,29 +7,28 @@ import { InferGetServerSidePropsType } from 'next'
 
 
 export default function User({ token }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    return (
-        <Layout>
-            <UserPage />
-        </Layout>
-    )
+  return (
+    <Layout>
+      <UserPage token={token} />
+    </Layout>
+  )
 }
 
 export const getServerSideProps = withIronSessionSsr(async function ({
-    req,
-    res,
-  }) {
-    const token = req.session.token
-    if (!token) {
-      return {
-        redirect: {
-            destination: '/',
-            permanent: true
-        }
+  req,
+  res,
+}) {
+  const token = req.session.token
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: true
       }
     }
-    let tok = token.toString();
-    return {
-      props: { token: tok },
-    }
-  },
-    ironSessionOptions)
+  }
+  return {
+    props: { token },
+  }
+},
+  ironSessionOptions)
