@@ -3,10 +3,66 @@ import MyCard from '../../../components/card'
 import MyModal from '../../../components/modal'
 import MyButton from '../../../components/forms/button'
 import MySelect from '../../../components/forms/select'
+import MyTable, { HeaderType } from '../../../components/table/client'
+import { ColumnFormat } from '../../../components/table/utilities'
 import MyTextFieldIcon from '../../../components/forms/textfield/with-icon/prefix'
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
 import { selectState, sort } from '../../../redux/features/user/slice'
 import { getData } from '../../../redux/features/user/action'
+
+const roleOptions: Array<any> = [
+    {
+        value: 'administrator',
+        text: 'Administrator'
+    },
+    {
+        value: 'manager',
+        text: 'Manager'
+    },
+]
+
+const headers: Array<HeaderType> = [
+    {
+        value: 'Email',
+        sort: true
+    },
+    {
+        value: 'Username',
+        sort: true
+    },
+    {
+        value: 'Action',
+        className: '',
+    },
+]
+const tmpData: Array<any> = [
+    {
+        email: 'email 1',
+        username: 'username 1',
+    },
+    {
+        email: 'email 2',
+        username: 'username 2',
+    },
+    {
+        email: 'email 3',
+        username: 'username 3',
+    },
+]
+
+const columns: Array<ColumnFormat> = [
+    {
+        value: 'email'
+    },
+    {
+        value: 'username'
+    },
+    {
+        render: (data) => {
+            return '-'
+        }
+    },
+];
 
 function Index({ token }: { token: unknown }) {
     const userState = useAppSelector(selectState)
@@ -17,16 +73,9 @@ function Index({ token }: { token: unknown }) {
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [role, setRole] = useState<string>('')
-    const roleOptions: Array<any> = [
-        {
-            value: 'administrator',
-            text: 'Administrator'
-        },
-        {
-            value: 'manager',
-            text: 'Manager'
-        },
-    ]
+
+
+
 
     useEffect(() => {
         console.log('effects');
@@ -39,7 +88,7 @@ function Index({ token }: { token: unknown }) {
             email, username, password, role
         }
         console.log(data);
-        
+
     }
     return (
         <div>
@@ -55,6 +104,11 @@ function Index({ token }: { token: unknown }) {
                 </div>
 
                 <div className='border-b border-gray-300 w-full mt-3 mb-3'></div>
+                <MyTable
+                    headers={headers}
+                    data={tmpData}
+                    column={columns}
+                />
             </MyCard>
             <MyModal isOpen={modalOpen} title='Modal Add User' onClose={() => { setModalOpen(false) }}>
                 <MyTextFieldIcon
