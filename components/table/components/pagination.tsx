@@ -1,16 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
-interface PaginationProps {
-    data: Array<any>,
-    totalPage: number,
-    currentPage: number,
-    perPage: number,
-    onChangePage: (page: number) => void,
-    onNextPage: () => void,
-    onPreviousPage: () => void,
-    onLastPage: () => void,
-    onFirstPage: () => void,
-}
+import { PaginationProps, PageLengthProps } from '../client/index'
 
 function Pagination({
     data,
@@ -26,6 +15,43 @@ function Pagination({
 
     const [pages, setPages] = useState<Array<number>>([])
     const [shownPages, setShownPages] = useState<Array<number>>([])
+
+    useEffect(() => {
+        let indexOf: number = pages.indexOf(currentPage) + 1;
+        let startIndex: number = indexOf - 2;
+        let endIndex: number = indexOf + 3;
+        let p: Array<number> = [];
+        for (let index = startIndex; index < endIndex; index++) {
+            p.push(index)
+        }
+
+        if (p[0] < 1) {
+            p = pages.slice(0, 5)
+        }
+
+        if (p[4] > pages.length) {
+            if (pages.length < 5) {
+                p = pages
+            } else {
+                p = pages.slice(pages.length - 5, pages.length)
+            }
+        }
+        setShownPages(p)
+        return () => {
+            setShownPages([])
+        }
+    }, [currentPage, pages])
+
+    useEffect(() => {
+        let p: Array<number> = [];
+        for (let i = 1; i <= totalPage; i++) {
+            p.push(i)
+        }
+        setPages(p)
+        return () => {
+            setPages([])
+        }
+    }, [totalPage])
     return (
         <nav className='flex items-center justify-between pt-4'>
             {
@@ -80,10 +106,6 @@ function Pagination({
 
 export default Pagination
 
-interface PageLengthProps {
-    pageLength: Array<number>,
-    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
-}
 
 export const PageLength = (
     {

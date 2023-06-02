@@ -1,11 +1,7 @@
 import React from 'react'
-import { HeaderType } from '../client'
+import { HeaderProps } from '../client'
 
-interface HeaderProps {
-    headers: Array<HeaderType>,
-    withIndex: boolean,
-    onSort?: (index: number) => void
-}
+
 function Header({
     headers,
     withIndex,

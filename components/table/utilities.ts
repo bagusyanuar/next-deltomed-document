@@ -1,3 +1,5 @@
+import { RowData, ColumnFormat } from './client'
+
 const ConvertDotNested = (object: any | undefined, key: string) => {
     let keys: Array<any> = key.split('.')
     for (let i = 0; i < keys.length; i++) {
@@ -32,5 +34,14 @@ export const CreateTableData = (data: Array<any>, columns: Array<ColumnFormat>):
     return results
 }
 
-export type RowData = { original: any, row: Array<any> }
-export type ColumnFormat = { value?: string | undefined | null, render?: (data: any) => any }
+export const SortData = (data: Array<RowData>, key: number, sort: string): Array<RowData> => {
+    let d: Array<RowData> = [...data]
+    let sorted: Array<RowData> = [];
+
+    if (sort === 'DESC') {
+        sorted = d.sort((a, b) => (a.row[key] < b.row[key]) ? 1 : ((b.row[key] > a.row[key]) ? -1 : 0))
+    } else {
+        sorted = d.sort((a, b) => (a.row[key] > b.row[key]) ? 1 : ((b.row[key] > a.row[key]) ? -1 : 0))
+    }
+    return sorted
+}

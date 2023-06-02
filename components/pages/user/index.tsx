@@ -3,8 +3,7 @@ import MyCard from '../../../components/card'
 import MyModal from '../../../components/modal'
 import MyButton from '../../../components/forms/button'
 import MySelect from '../../../components/forms/select'
-import MyTable, { HeaderType } from '../../../components/table/client'
-import { ColumnFormat } from '../../../components/table/utilities'
+import MyTable, { HeaderType, ColumnFormat } from '../../../components/table/client'
 import MyTextFieldIcon from '../../../components/forms/textfield/with-icon/prefix'
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
 import { selectState, sort } from '../../../redux/features/user/slice'
@@ -35,7 +34,7 @@ const headers: Array<HeaderType> = [
         className: '',
     },
 ]
-const tmpData: Array<any> = [
+let tmpData: Array<any> = [
     {
         email: 'email 1',
         username: 'username 1',
@@ -58,7 +57,7 @@ const columns: Array<ColumnFormat> = [
         value: 'username'
     },
     {
-        render: (data) => {
+        render: () => {
             return '-'
         }
     },
@@ -73,9 +72,6 @@ function Index({ token }: { token: unknown }) {
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [role, setRole] = useState<string>('')
-
-
-
 
     useEffect(() => {
         dispatch(getData({ token: token, limit: 5, offset: 0 }))
@@ -106,6 +102,8 @@ function Index({ token }: { token: unknown }) {
                     headers={headers}
                     data={tmpData}
                     column={columns}
+                    pageLength={[1, 2]}
+                    onSorted={(d) => { tmpData = d }}
                 />
             </MyCard>
             <MyModal isOpen={modalOpen} title='Modal Add User' onClose={() => { setModalOpen(false) }}>
