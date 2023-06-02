@@ -1,18 +1,14 @@
 import React from 'react'
+import { ButtonLoadingProps } from '../index'
 
 function Index({
-    isLoading,
+    isLoading = false,
     children,
     onClick,
-}: {
-    children: React.ReactNode
-    isLoading: boolean,
-    onClick?: React.MouseEventHandler<HTMLButtonElement>,
-
-}) {
+}: ButtonLoadingProps) {
     return (
         <button
-            onClick={onClick}
+            onClick={() => { onClick() }}
             disabled={isLoading}
             type='button'
             className='flex items-center text-sm bg-green-500 rounded-md py-2 px-4 text-white hover:bg-green-600 transition-colors ease-in duration-200'

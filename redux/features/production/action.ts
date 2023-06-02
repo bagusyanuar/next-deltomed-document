@@ -1,16 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { URLAdmin, APIResponse } from '../../../lib/api'
 
-const path = '/user'
+const path = '/production'
 
 export type PostData = {
-    email: string,
-    username: string,
-    password: string,
-    role: string
+    code: string,
+    name: string
 }
 
-export const getData = createAsyncThunk('user/getData', async ({
+export const getData = createAsyncThunk('production/getData', async ({
     token,
     limit,
     offset
@@ -34,7 +32,7 @@ export const getData = createAsyncThunk('user/getData', async ({
     }
 })
 
-export const create = createAsyncThunk('user/create', async ({
+export const create = createAsyncThunk('production/create', async ({
     token, data,
 }: {
     token: unknown,

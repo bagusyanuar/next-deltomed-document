@@ -12,7 +12,7 @@ const ConvertDotNested = (object: any | undefined, key: string) => {
 
 export const CreateTableData = (data: Array<any>, columns: Array<ColumnFormat>): Array<RowData> => {
     let results: Array<RowData> = [];
-
+    
     data.forEach((v, i) => {
         let rowData: Array<any> = [];
         columns.forEach((vColumn, iColumn) => {

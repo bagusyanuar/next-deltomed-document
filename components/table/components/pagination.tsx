@@ -61,14 +61,14 @@ function Pagination({
             }
             <ul className='inline-flex items-center -space-x-px'>
                 <li>
-                    <a href='#' onClick={(e) => { e.preventDefault(); onFirstPage() }} className={`px-3 py-2 ml-0 leading-tight text-sm ${currentPage === 1 ? 'text-slate-400' : 'text-slate-600'} border border-slate-300 rounded-l-md`}>
+                    <a href='#' onClick={(e) => { e.preventDefault(); onFirstPage() }} className={`px-3 py-2 ml-0 leading-tight text-sm ${currentPage === 1 || data.length === 0 ? 'text-slate-400' : 'text-slate-600'} border border-slate-300 rounded-l-md`}>
                         <span className="material-symbols-outlined text-sm">
                             first_page
                         </span>
                     </a>
                 </li>
                 <li>
-                    <a href='#' onClick={(e) => { e.preventDefault(); onPreviousPage() }} className={`px-3 py-2 ml-0 leading-tight text-sm ${currentPage === 1 ? 'text-slate-400' : 'text-slate-600'} border border-slate-300`}>
+                    <a href='#' onClick={(e) => { e.preventDefault(); onPreviousPage() }} className={`px-3 py-2 ml-0 leading-tight text-sm ${currentPage === 1 || data.length === 0 ? 'text-slate-400' : 'text-slate-600'} border border-slate-300`}>
                         <span className="material-symbols-outlined text-sm">
                             chevron_left
                         </span>
@@ -86,14 +86,14 @@ function Pagination({
                     })
                 }
                 <li>
-                    <a href='#' onClick={(e) => { e.preventDefault(); onNextPage() }} className={`px-3 py-2 ml-0 leading-tight text-sm ${currentPage === totalPage ? 'text-slate-400' : 'text-slate-600'} border border-slate-300`}>
+                    <a href='#' onClick={(e) => { e.preventDefault(); onNextPage() }} className={`px-3 py-2 ml-0 leading-tight text-sm ${currentPage === totalPage || data.length === 0 ? 'text-slate-400' : 'text-slate-600'} border border-slate-300`}>
                         <span className="material-symbols-outlined text-sm">
                             chevron_right
                         </span>
                     </a>
                 </li>
                 <li>
-                    <a href='#' onClick={(e) => { e.preventDefault(); onLastPage() }} className={`px-3 py-2 ml-0 leading-tight text-sm ${currentPage === totalPage ? 'text-slate-400' : 'text-slate-600'} border border-slate-300 rounded-r-md`}>
+                    <a href='#' onClick={(e) => { e.preventDefault(); onLastPage() }} className={`px-3 py-2 ml-0 leading-tight text-sm ${currentPage === totalPage || data.length === 0 ? 'text-slate-400' : 'text-slate-600'} border border-slate-300 rounded-r-md`}>
                         <span className="material-symbols-outlined text-sm">
                             last_page
                         </span>

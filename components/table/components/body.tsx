@@ -1,5 +1,6 @@
 import React from 'react'
 import { HeaderType, RowData, BodyProps } from '../client'
+import EmptyRecord from './empty'
 
 
 function Body({
@@ -10,6 +11,14 @@ function Body({
     perPage = 0,
     pagination = true
 }: BodyProps) {
+    if (data.length <= 0) {
+        let coloumnCount = withIndex ? (headers.length + 1) : headers.length;
+        return (
+            <tbody>
+                <EmptyRecord coloumnCount={coloumnCount} message={`No Record Found`} />
+            </tbody>
+        )
+    }
     return (
         <tbody>
             {

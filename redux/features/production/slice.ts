@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../store'
 import { getData, create } from './action'
 
-type UserState = {
+type ProductionState = {
     type: string,
     isLoading: boolean,
     data: any,
@@ -12,7 +11,7 @@ type UserState = {
     message: string
 }
 
-const initialState: UserState = {
+const initialState: ProductionState = {
     type: 'FETCH',
     isLoading: false,
     data: null,
@@ -22,7 +21,7 @@ const initialState: UserState = {
 }
 
 const slice = createSlice({
-    name: 'user',
+    name: 'production',
     initialState,
     reducers: {
         sort: (state, { payload }) => {
@@ -65,7 +64,5 @@ const slice = createSlice({
 })
 
 export const { sort } = slice.actions
-
-export const selectState = (state: RootState) => state.user
-
+export const selectState = (state: RootState) => state.production
 export default slice.reducer

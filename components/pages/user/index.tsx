@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react'
 import MyCard from '../../../components/card'
 import MyModal from '../../../components/modal'
 import MyButton from '../../../components/forms/button'
-import MySelect from '../../../components/forms/select'
+import MySelect, { SelectDataFormat } from '../../../components/forms/select'
 import MyTable, { HeaderType, ColumnFormat } from '../../../components/table/client'
+import TableAction from '../../../components/table/components/action'
 import MyTextFieldIcon from '../../../components/forms/textfield/with-icon/prefix'
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
 import { selectState, sort } from '../../../redux/features/user/slice'
-import { getData } from '../../../redux/features/user/action'
+import { getData, create, PostData } from '../../../redux/features/user/action'
 
-const roleOptions: Array<any> = [
+const roleOptions: Array<SelectDataFormat> = [
     {
         value: 'administrator',
         text: 'Administrator'
@@ -31,37 +32,10 @@ const headers: Array<HeaderType> = [
     },
     {
         value: 'Action',
-        className: '',
-    },
-]
-let tmpData: Array<any> = [
-    {
-        email: 'email 1',
-        username: 'username 1',
-    },
-    {
-        email: 'email 2',
-        username: 'username 2',
-    },
-    {
-        email: 'email 3',
-        username: 'username 3',
+        className: 'w-3 text-center',
     },
 ]
 
-const columns: Array<ColumnFormat> = [
-    {
-        value: 'email'
-    },
-    {
-        value: 'username'
-    },
-    {
-        render: () => {
-            return '-'
-        }
-    },
-];
 
 function Index({ token }: { token: unknown }) {
     const userState = useAppSelector(selectState)
@@ -73,16 +47,32 @@ function Index({ token }: { token: unknown }) {
     const [password, setPassword] = useState<string>('')
     const [role, setRole] = useState<string>('')
 
+    const columns: Array<ColumnFormat> = [
+        { value: 'email' },
+        { value: 'username' },
+        {
+            render: (d) => {
+                return <TableAction onEdit={() => {
+                    console.log(d);
+                }} onDelete={() => { }} />
+            }
+        },
+    ];
+
     useEffect(() => {
         dispatch(getData({ token: token, limit: 5, offset: 0 }))
     }, [])
 
-    const handleSave = () => {
-        const data = {
+    const handleSave = async () => {
+        const data: PostData = {
             email, username, password, role
         }
+        await dispatch(create({token: token, data: data}))
         console.log(data);
+    }
 
+    const handleSort = (data: Array<any>) => {
+        dispatch(sort(data))
     }
     return (
         <div>
@@ -100,10 +90,10 @@ function Index({ token }: { token: unknown }) {
                 <div className='border-b border-gray-300 w-full mt-3 mb-3'></div>
                 <MyTable
                     headers={headers}
-                    data={tmpData}
+                    data={userState.data ? userState.data : []}
                     column={columns}
                     pageLength={[1, 2]}
-                    onSorted={(d) => { tmpData = d }}
+                    onSorted={(d) => { handleSort(d) }}
                 />
             </MyCard>
             <MyModal isOpen={modalOpen} title='Modal Add User' onClose={() => { setModalOpen(false) }}>
@@ -140,10 +130,11 @@ function Index({ token }: { token: unknown }) {
                 <MySelect
                     icon='loyalty'
                     data={roleOptions}
-                    id='role'
-                    name='roles'
-                    placeholder='--choose role--'
-                    onSelect={(v) => { setRole(v) }}
+                    onChange={(v) => { setRole(v) }}
+                    // id='role'
+                    // name='roles'
+                    // placeholder='--choose role--'
+                    // onSelect={(v) => { setRole(v) }}
                     className='mb-3'
                 />
                 <div className='flex w-full justify-end'>

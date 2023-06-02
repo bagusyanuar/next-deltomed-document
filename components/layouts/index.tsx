@@ -23,6 +23,7 @@ function Index({
                 </div>
                 <SidebarItem icon="dashboard" title="Dashboard" link="/dashboard" active={path === '/dashboard' ? true : false} />
                 <SidebarItem icon="person" title="User" link="/user" active={path === '/user' ? true : false} />
+                <SidebarItem icon="precision_manufacturing" title="Production" link="/production" active={path === '/production' ? true : false} />
             </Sidebar>
             <Content>
                 <Navbar title={`Dashboard`} username={`abc`} />

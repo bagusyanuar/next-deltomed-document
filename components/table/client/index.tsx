@@ -5,8 +5,9 @@ export type RowData = { original: any, row: Array<any> }
 export type ColumnFormat = { value?: string | undefined | null, render?: (data: any) => any }
 
 export interface TableProps { headers: Array<HeaderType>, data: Array<any>, column: Array<ColumnFormat>, pageLength?: Array<number>, withIndex?: boolean, pagination?: boolean, onSorted?: (d: Array<any>) => void}
-export interface BodyProps { data: Array<RowData>, headers: Array<HeaderType>, withIndex?: boolean, pagination?: boolean, page?: number, perPage?: number }
 export interface HeaderProps { headers: Array<HeaderType>, withIndex: boolean, onSort?: (index: number) => void }
+export interface BodyProps { data: Array<RowData>, headers: Array<HeaderType>, withIndex?: boolean, pagination?: boolean, page?: number, perPage?: number }
+export interface EmptyBodyProps { coloumnCount?: number, message?: string }
 export interface PaginationProps {
     data: Array<any>,
     totalPage: number,
@@ -20,4 +21,5 @@ export interface PaginationProps {
 }
 
 export interface PageLengthProps { pageLength: Array<number>, onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void }
+export interface ActionProps { onEdit: () => void, onDelete: () => void }
 export default Table
