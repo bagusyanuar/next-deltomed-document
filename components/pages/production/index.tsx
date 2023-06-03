@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import MyCard from '../../../components/card'
 import MyModal from '../../../components/modal'
 import MyButton from '../../../components/forms/button'
 import MyButtonLoading from '../../../components/forms/button/with-loading'
 import MyTextfield from '../../../components/forms/textfield'
 import MyTable, { HeaderType, ColumnFormat } from '../../../components/table/client'
-import TableAction from '../../../components/table/components/action'
+import TableAction from './action'
 
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
 import { selectState, sort } from '../../../redux/features/production/slice'
@@ -24,6 +25,7 @@ const tableHeaders: Array<HeaderType> = [
 function Index({ token }: { token: unknown }) {
     const productionState = useAppSelector(selectState)
     const dispatch = useAppDispatch()
+    const router = useRouter()
 
     const [modalOpen, setModalOpen] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -33,7 +35,11 @@ function Index({ token }: { token: unknown }) {
         { value: 'name' },
         {
             render: (d) => {
-                return '-'
+                return (<TableAction
+                    onEdit={() => { console.log(d) }}
+                    onDelete={() => { console.log(d) }}
+                    onDetail={() => { router.push(`/production/${d.id}`) }}
+                />)
             }
         },
     ];
