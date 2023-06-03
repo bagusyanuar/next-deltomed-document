@@ -32,6 +32,28 @@ export const getData = createAsyncThunk('production/getData', async ({
     }
 })
 
+export const getDataByID = createAsyncThunk('production/getDataByID', async ({
+    token,
+    id,
+}: {
+    token: unknown,
+    id: string | undefined,
+}, { rejectWithValue }) => {
+    try {
+        URLAdmin.defaults.headers.common.Authorization = `Bearer ${token}`
+        const response = await URLAdmin.get(`${path}/${id}`);
+        return response.data
+    } catch (error: any) {
+        return rejectWithValue({
+            code: 500,
+            message: 'error',
+            data: {
+                message: error.response ? error.message : error.response.data.message
+            }
+        })
+    }
+})
+
 export const create = createAsyncThunk('production/create', async ({
     token, data,
 }: {

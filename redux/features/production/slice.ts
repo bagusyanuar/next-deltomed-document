@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '../../store'
-import { getData, create } from './action'
+import { getData, create, getDataByID } from './action'
 
 type ProductionState = {
     type: string,
@@ -41,6 +41,23 @@ const slice = createSlice({
             state.success = true
             state.data = action.payload.data
         }).addCase(getData.rejected, (state, action) => {
+            state.type = 'FETCH'
+            state.isLoading = false
+            state.success = false
+            state.error = true
+            state.data = []
+        }).addCase(getDataByID.pending, (state, action) => {
+            state.type = 'FETCH'
+            state.isLoading = true
+            state.error = false
+            state.success = false
+        }).addCase(getDataByID.fulfilled, (state, action) => {
+            state.type = 'FETCH'
+            state.isLoading = false
+            state.error = false
+            state.success = true
+            state.data = action.payload.data
+        }).addCase(getDataByID.rejected, (state, action) => {
             state.type = 'FETCH'
             state.isLoading = false
             state.success = false
