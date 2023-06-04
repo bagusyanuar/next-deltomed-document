@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import MyCard from '../../../components/card'
-import Stepper from '../../stepper'
+import Stepper, { ShimmerStepper } from '../../stepper'
+import MyTable, { HeaderType, ColumnFormat } from '../../../components/table/client'
 import { URLAdmin, ErrorRespose, APIResponse } from '../../../lib/api'
+import { ProductionModel, ProductionStepModel, ProductionSubStepModel } from '../../../lib/api/model'
 import { AxiosError } from 'axios'
 
 function Detail({
@@ -14,13 +16,30 @@ function Detail({
 
     const path = '/production'
     const [activeStep, setActiveStep] = useState<number>(0)
-    const [data, setData] = useState<Array<any>>([])
+    const [data, setData] = useState<Array<ProductionStepModel>>([])
     const [dataStepper, setDataStepper] = useState<Array<string>>([])
-    // const dataStepper = ['Production 1', 'Production 2', 'Production 3']
+    const [dataSubStep, setDataSubStep] = useState<Array<ProductionSubStepModel>>([])
+
+    const tableHeader: Array<HeaderType> = [
+        {
+            value: 'Index',
+            sort: true,
+            className: 'w-3 text-center',
+        },
+        {
+            value: 'Name',
+            sort: true
+        },
+    ]
+
+    const tableColumns: Array<ColumnFormat> = [
+        { value: 'index_of' },
+        { value: 'name' },
+    ]
 
     const handleChangeStep = (v: number) => {
         setActiveStep(v)
-        console.log(data[v]);
+        setDataSubStep(data[v].production_sub_step)
     }
 
     const initData = async () => {
@@ -28,15 +47,14 @@ function Detail({
             URLAdmin.defaults.headers.common.Authorization = `Bearer ${token}`
             const response = await URLAdmin.get(`${path}/${id}`);
             const data = response.data as APIResponse
-            let production_step: Array<any> = data.data ? data.data['production_step'] : []
+            const production = data.data as ProductionModel;
+            setData(production.production_step)
             let tmpDataStepper: Array<string> = []
-            let tmpData: Array<any> = []
-            production_step.forEach((v, k) => {
-                tmpData.push(v)
-                tmpDataStepper.push(v['name'])
+            production.production_step.forEach((v, k) => {
+                tmpDataStepper.push(v.name)
             })
-            setData(tmpData)
             setDataStepper(tmpDataStepper)
+            console.log(production.production_step);
         } catch (error: any | AxiosError) {
             let err: APIResponse = ErrorRespose(error);
             console.log(err);
@@ -52,9 +70,17 @@ function Detail({
                     <p className='text-gray-600 text-sm'>Production Step</p>
                 </div>
                 <div className='border-b border-gray-300 w-full mt-3 mb-3'></div>
-                <div className='w-full text-center'>
-                    <Stepper data={dataStepper} onChange={(v) => { handleChangeStep(v) }} />
+                <div className='w-full text-center mb-3'>
+                    {/* <Stepper data={dataStepper} onChange={(v) => { handleChangeStep(v) }} /> */}
+                    <ShimmerStepper />
                 </div>
+                <MyTable
+                    headers={tableHeader}
+                    data={dataSubStep}
+                    column={tableColumns}
+                    pagination={false}
+                    withIndex={false}
+                />
             </MyCard>
 
         </div>
