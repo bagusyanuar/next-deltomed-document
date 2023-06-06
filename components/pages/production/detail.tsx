@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import MyCard from '../../../components/card'
-import Stepper, { ShimmerStepper } from '../../stepper'
+import Stepper, { ShimmerStepper, VerticalStepper, ShimmerVerticalStepper } from '../../stepper'
 import MyTable, { HeaderType, ColumnFormat } from '../../../components/table/client'
 import { URLAdmin, ErrorRespose, APIResponse } from '../../../lib/api'
 import { ProductionModel, ProductionStepModel, ProductionSubStepModel } from '../../../lib/api/model'
@@ -70,17 +70,27 @@ function Detail({
                     <p className='text-gray-600 text-sm'>Production Step</p>
                 </div>
                 <div className='border-b border-gray-300 w-full mt-3 mb-3'></div>
-                <div className='w-full text-center mb-3'>
+                <div className='w-full flex text-center mb-3'>
                     {/* <Stepper data={dataStepper} onChange={(v) => { handleChangeStep(v) }} /> */}
-                    <ShimmerStepper />
+                    {/* <ShimmerStepper /> */}
+                    <div className='w-1/5 border-r border-gray-400 min-h-[400px]'>
+                        <ShimmerVerticalStepper />
+                    </div>
+                    <div className='grow pl-3'>
+                        <div className='h-20 w-full relative'>
+                            <div className='bg-green-500 w-full h-8 absolute top-3'>abc</div>
+                            <div className='h-8 w-20 absolute left-3 top-2 bg-red-400'></div>
+                        </div>
+                    </div>
+
                 </div>
-                <MyTable
+                {/* <MyTable
                     headers={tableHeader}
                     data={dataSubStep}
                     column={tableColumns}
                     pagination={false}
                     withIndex={false}
-                />
+                /> */}
             </MyCard>
 
         </div>
