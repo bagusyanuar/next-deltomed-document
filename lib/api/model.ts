@@ -1,6 +1,7 @@
 export type ProductionModel = {
     id: string,
     code: string,
+    name: string,
     production_step: Array<ProductionStepModel>
 }
 

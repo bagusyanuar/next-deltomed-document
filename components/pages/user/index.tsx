@@ -96,7 +96,7 @@ function Index({ token }: { token: unknown }) {
                     onSorted={(d) => { handleSort(d) }}
                 />
             </MyCard>
-            <MyModal isOpen={modalOpen} title='Modal Add User' onClose={() => { setModalOpen(false) }}>
+            <MyModal open={modalOpen} title='Modal Add User' onClose={() => { setModalOpen(false) }}>
                 <MyTextFieldIcon
                     icon='mail'
                     type='text'
